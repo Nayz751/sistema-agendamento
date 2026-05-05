@@ -1,0 +1,242 @@
+/* RESET ESSENCIAL */
+* {
+  box-sizing: border-box;
+}
+
+html, body {
+  margin: 0;
+  overflow-x: hidden; 
+}
+
+:root {
+  --aura-bg: #fdfaf7;
+  --aura-accent-soft: #f8c8d8;
+  --aura-text: #4a3f3f;
+  --aura-text-dim: #8e8383;
+  --aura-input: #f5ece4;
+  --aura-card: #ffffff;
+}
+
+.aura-container {
+  min-height: 100vh;
+  background-color: var(--aura-bg);
+  color: var(--aura-text);
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  width: 100%;
+}
+
+.aura-main {
+  width: 100%;
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 40px 20px;
+}
+
+.aura-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 30px;
+}
+
+.aura-header h1 {
+  color: black;
+  font-size: 30px;
+}
+
+.header-actions {
+  display: flex;
+  gap: 12px;
+}
+
+.btn-text {
+  background: #e5e5e5;
+  border: none;
+  padding: 12px 28px;
+  border-radius: 25px;
+  color: #555;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.btn-text:hover {
+  background: #d6d6d6;
+}
+
+.btn-primary {
+  background: var(--aura-accent-soft);
+  border: none;
+  padding: 12px 28px;
+  border-radius: 25px;
+  color: #7a5c5c;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.aura-content-grid {
+  display: grid;
+  grid-template-columns: 320px 1fr;
+  gap: 30px;
+  width: 100%;
+  max-width: 100%;
+}
+
+.aura-sidebar-info {
+  position: sticky;
+  top: 40px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  min-width: 0;
+}
+
+.aura-card {
+  background: white;
+  border-radius: 16px;
+  padding: 24px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.02);
+}
+
+.aura-card h2 {
+  color: black;
+}
+
+.aura-info-box {
+  background: #f0f4f8;
+  padding: 20px;
+  border-radius: 16px;
+}
+
+.input-group {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 20px;
+  position: relative; 
+}
+
+.input-group label {
+  font-size: 11px;
+  text-transform: uppercase;
+  font-weight: 700;
+  color: var(--aura-text-dim);
+  margin-bottom: 8px;
+}
+
+input,select,textarea {
+  width: 100%;
+  max-width: 100%;
+  background: var(--aura-input);
+  border: none;
+  border-radius: 10px;
+  padding: 12px;
+  font-family: inherit;
+}
+
+.form-row {
+  display: flex;
+  gap: 20px;
+  width: 100%;
+}
+
+.tag-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.tag-button {
+  background: white;
+  border: 1px solid #e6d5cb;
+  padding: 8px 18px;
+  border-radius: 20px;
+  font-size: 13px;
+  cursor: pointer;
+  color: black;
+}
+
+.tag-button.active {
+  background: var(--aura-accent-soft);
+  border-color: var(--aura-accent-soft);
+  color: #7a5c5c;
+  font-weight: 600;
+}
+
+.autocomplete-box {
+  background: white;
+  border-radius: 10px;
+  margin-top: 5px;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+  max-height: 150px;
+  overflow-y: auto;
+  position: absolute;
+  width: 100%;
+  left: 0;
+  top: 100%;
+  z-index: 10;
+}
+
+.autocomplete-item {
+  padding: 12px;
+  cursor: pointer;
+}
+
+.autocomplete-item:hover {
+  background: #fff0f3;
+}
+
+.react-calendar {
+  width: 100% !important;
+  border: none !important;
+  background: white !important;
+  font-family: inherit !important;
+  border-radius: 16px;
+  padding: 10px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.03);
+}
+
+.react-calendar__tile--active {
+  background: var(--aura-accent-soft) !important;
+  color: #7a5c5c !important;
+  border-radius: 8px;
+}
+
+.react-calendar__tile--now {
+  background: #f398c7 !important;
+  border-radius: 8px;
+}
+
+.react-calendar__tile {
+  color: black;
+}
+
+.react-calendar__navigation button {
+  color: black;
+  background-color: #f9ddeb;
+}
+
+.header-title {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.back-arrow {
+  width: 42px;
+  height: 42px;
+  border: none;
+  border-radius: 50%;
+  background: var(--aura-accent-soft);
+  color: #7a5c5c;
+  font-size: 24px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.back-arrow:hover {
+  transform: translateX(-3px);
+  background: #f5b8cc;
+}
+
+.header-title h1 {
+  margin: 0;
+}

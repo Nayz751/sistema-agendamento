@@ -1,0 +1,115 @@
+.aura-sidebar {
+  width: 250px;
+  height: 100vh;
+  background: #f2f2f2; /* cinza claro */
+
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+
+  padding: 12px 20px 20px 20px; /* topo menor */
+
+  border-right: 1px solid #e0e0e0;
+}
+
+/* LOGO */
+.aura-logo {
+  font-size: 16px;
+  font-weight: 600;
+
+  margin-top: 4px;   /* sobe o logo */
+  margin-bottom: 18px;
+
+  color: #4b2e2e;
+  letter-spacing: 0.3px;
+}
+
+/* NAV */
+.aura-nav {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-top: -2px; /* “puxa” o Home um pouquinho pra cima */
+}
+
+/* ITEM NORMAL */
+.aura-nav-item {
+  display: flex;
+  align-items: center;
+  gap: 8px; /* palavras mais juntas */
+
+  padding: 10px 12px;
+
+  background: transparent;
+  border: none;
+  cursor: pointer;
+
+  font-size: 13px;
+  color: #4b2e2e;
+
+  border-radius: 0 12px 12px 0; /* esquerda arredondada, direita reta */
+
+  position: relative;
+  transition: 0.2s;
+
+  line-height: 1.2;
+}
+
+/* hover */
+.aura-nav-item:hover {
+  background: rgba(75, 46, 46, 0.08);
+}
+
+/* ITEM ATIVO */
+.aura-nav-item.active {
+  background: #ffffff;
+  color: #ff4da6; /* rosa */
+  font-weight: 600;
+}
+
+/* LINHA ROSA NO LADO DIREITO */
+.aura-nav-item.active::after {
+  content: "";
+  position: absolute;
+  right: 0;
+  top: 6px;
+  bottom: 6px;
+  width: 5px;
+  background: #ff4da6;
+  border-radius: 8px 0 0 8px;
+}
+
+/* ÍCONES seguem cor do texto */
+.aura-nav-item svg,
+.aura-nav-item i {
+  color: inherit;
+}
+
+/* USER BOX */
+.aura-user-pill {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+
+  background: #ffffff;
+  padding: 10px;
+  border-radius: 12px;
+
+  color: #4b2e2e;
+}
+
+/* iniciais usuário */
+.user-initials {
+  width: 35px;
+  height: 35px;
+  border-radius: 50%;
+
+  background: #4b2e2e;
+  color: #fff;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  font-weight: bold;
+}
