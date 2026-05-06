@@ -1,13 +1,20 @@
-import React from "react";
+import React, { useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import "./PerfilCliente.css";
 
 const ClientProfile = () => {
-
   const location = useLocation();
   const navigate = useNavigate();
 
   const client = location.state;
+
+  const [isEditing, setIsEditing] = useState(false);
+  const [form, setForm] = useState({
+    nome: client?.nome || "",
+    telefone: client?.telefone || "",
+    email: client?.email || "",
+    notas: client?.notas || ""
+  });
 
   if (!client) {
     return (
@@ -20,13 +27,43 @@ const ClientProfile = () => {
     );
   }
 
+  const handleChange = (e) => {
+    setForm({ ...form, [e.target.name]: e.target.value });
+  };
+
+  const handleSave = async () => {
+    try {
+      await fetch(`http://localhost:3000/clientes/${client.id}`, {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(form)
+      });
+
+      setIsEditing(false);
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
+  const handleDelete = async () => {
+    const confirm = window.confirm("Deseja excluir este cliente?");
+    if (!confirm) return;
+
+    try {
+      await fetch(`http://localhost:3000/clientes/${client.id}`, {
+        method: "DELETE"
+      });
+
+      navigate("/");
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
   return (
     <div className="perfil-container">
       <header className="perfil-header">
-        <button
-          className="back-btn"
-          onClick={() => navigate(-1)}
-        >
+        <button className="back-btn" onClick={() => navigate(-1)}>
           ←
         </button>
         <h1>Perfil do Cliente</h1>
@@ -39,7 +76,12 @@ const ClientProfile = () => {
         </div>
 
         <div className="actions-buttons">
-          <button>Editar Cliente</button>
+          <button
+            onClick={handleDelete}
+            style={{ background: "#ff4d4f", color: "#fff" }}
+          >
+            Excluir Cliente
+          </button>
           <button>Registrar Nota</button>
           <button className="primary">+ Novo Serviço</button>
         </div>
@@ -48,11 +90,20 @@ const ClientProfile = () => {
       <div className="perfil-grid">
         <div className="card perfil-card">
 
+          {/* ✏️ editar */}
+          <div style={{ textAlign: "right", cursor: "pointer" }}>
+            <span onClick={() => setIsEditing(!isEditing)}>✏️</span>
+          </div>
+
           <div className="perfil-topo">
             <div className="foto"></div>
 
             <div>
-              <h2>{client.nome}</h2>
+              {isEditing ? (
+                <input name="nome" value={form.nome} onChange={handleChange} />
+              ) : (
+                <h2>{form.nome}</h2>
+              )}
               <span>ID: #{client.id}</span>
             </div>
           </div>
@@ -60,12 +111,20 @@ const ClientProfile = () => {
           <div className="info-grid">
             <div>
               <label>TELEFONE</label>
-              <p>{client.telefone || "-"}</p>
+              {isEditing ? (
+                <input name="telefone" value={form.telefone} onChange={handleChange} />
+              ) : (
+                <p>{form.telefone || "-"}</p>
+              )}
             </div>
 
             <div>
               <label>EMAIL</label>
-              <p>{client.email || "-"}</p>
+              {isEditing ? (
+                <input name="email" value={form.email} onChange={handleChange} />
+              ) : (
+                <p>{form.email || "-"}</p>
+              )}
             </div>
 
             <div>
@@ -75,13 +134,23 @@ const ClientProfile = () => {
 
             <div>
               <label>OBSERVAÇÕES</label>
-              <p>{client.notas || "-"}</p>
+              {isEditing ? (
+                <textarea name="notas" value={form.notas} onChange={handleChange} />
+              ) : (
+                <p>{form.notas || "-"}</p>
+              )}
             </div>
           </div>
 
+          {isEditing && (
+            <button onClick={handleSave} className="primary">
+              Salvar
+            </button>
+          )}
+
           <div className="alerta">
             <h4>⚠ OBSERVAÇÕES IMPORTANTES</h4>
-            <p>{client.notas || "Nenhuma observação cadastrada."}</p>
+            <p>{form.notas || "Nenhuma observação cadastrada."}</p>
           </div>
         </div>
 
@@ -104,7 +173,9 @@ const ClientProfile = () => {
         </div>
       </div>
 
+      {/* 🔥 VOLTOU AQUI */}
       <div className="perfil-grid-bottom">
+
         <div className="card">
           <h3>Preferências</h3>
 

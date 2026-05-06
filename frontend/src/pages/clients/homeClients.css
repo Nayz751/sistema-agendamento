@@ -1,0 +1,167 @@
+.homeclients-container {
+  padding: 30px;
+  background: #f9f7f5;
+  min-height: 100vh;
+}
+
+.homeclients-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+/* 🔹 BOTÃO NOVO CLIENTE */
+.btn-new-client {
+  background: #ff8fab;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 20px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: all 0.2s ease;
+}
+
+.btn-new-client:hover {
+  background: #ff6f98;
+  transform: translateY(-1px);
+}
+
+.homeclients-grid {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 20px;
+  margin-top: 20px;
+}
+
+.table-box {
+  background: white;
+  padding: 20px;
+  border-radius: 12px;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+th {
+  text-align: left;
+  color: #999;
+  font-size: 12px;
+}
+
+td {
+  padding: 12px 0;
+  border-bottom: 1px solid #eee;
+}
+
+/* 🔹 CLIENTE */
+.client-cell {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+/* 🔹 AVATAR */
+.avatar {
+  width: 42px;
+  height: 42px;
+  background: #ff8fab;
+  color: white;
+  font-weight: bold;
+  font-size: 16px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.avatar.big {
+  width: 90px;
+  height: 90px;
+  font-size: 28px;
+  margin: 0 auto;
+}
+
+/* 🔹 STATUS */
+.status.ativo {
+  background: #ffe4ec;
+  color: #ff4d88;
+  padding: 5px 10px;
+  border-radius: 10px;
+  font-size: 12px;
+}
+
+/* 🔹 AÇÕES (👁 ✏️ 🗑 SEM QUADRADO) */
+.actions {
+  display: flex;
+  gap: 10px;
+}
+
+.actions button {
+  border: none;
+  background: transparent;
+  padding: 0;
+  cursor: pointer;
+  font-size: 16px;
+  transition: all 0.2s ease;
+}
+
+.actions button:hover {
+  transform: scale(1.2);
+  opacity: 0.7;
+}
+
+/* cores no hover */
+.actions button:nth-child(1):hover {
+  color: #4dabf7; /* ver */
+}
+
+.actions button:nth-child(2):hover {
+  color: #ffa94d; /* editar */
+}
+
+.actions button:nth-child(3):hover {
+  color: #ff6b6b; /* deletar */
+}
+
+/* 🔹 SIDEBAR */
+.detail-box {
+  background: white;
+  padding: 20px;
+  border-radius: 12px;
+}
+
+.detail-header {
+  text-align: center;
+}
+
+.detail-info {
+  margin-top: 20px;
+}
+
+/* 🔹 BOTÕES (ROSA CLARINHO) */
+.detail-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-top: 20px;
+}
+
+.detail-actions button {
+  width: 100%;
+  padding: 12px;
+  border-radius: 20px;
+  border: none;
+  font-weight: 600;
+  cursor: pointer;
+  background: #ffe4ec; /* 🔥 rosa claro */
+  color: #ff4d88;
+  transition: all 0.2s ease;
+}
+
+.detail-actions button:hover {
+  background: #ffd6e4;
+  transform: translateY(-1px);
+}
