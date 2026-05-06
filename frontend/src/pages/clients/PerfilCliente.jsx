@@ -1,5 +1,5 @@
-import React, { useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
+import { useClientProfile } from "../../hooks/useClientProfile";
 import "./PerfilCliente.css";
 
 const ClientProfile = () => {
@@ -8,18 +8,11 @@ const ClientProfile = () => {
 
   const client = location.state;
 
-  const [isEditing, setIsEditing] = useState(false);
-  const [form, setForm] = useState({
-    nome: client?.nome || "",
-    telefone: client?.telefone || "",
-    email: client?.email || "",
-    notas: client?.notas || ""
-  });
-
   if (!client) {
     return (
       <div className="perfil-container">
         <h2>Cliente não encontrado</h2>
+
         <button onClick={() => navigate("/")}>
           Voltar para início
         </button>
@@ -27,134 +20,200 @@ const ClientProfile = () => {
     );
   }
 
-  const handleChange = (e) => {
-    setForm({ ...form, [e.target.name]: e.target.value });
-  };
+  const {
+    isEditing,
+    setIsEditing,
 
-  const handleSave = async () => {
-    try {
-      await fetch(`http://localhost:3000/clientes/${client.id}`, {
-        method: "PUT",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(form)
-      });
+    form,
+    handleChange,
 
-      setIsEditing(false);
-    } catch (err) {
-      console.error(err);
-    }
-  };
-
-  const handleDelete = async () => {
-    const confirm = window.confirm("Deseja excluir este cliente?");
-    if (!confirm) return;
-
-    try {
-      await fetch(`http://localhost:3000/clientes/${client.id}`, {
-        method: "DELETE"
-      });
-
-      navigate("/");
-    } catch (err) {
-      console.error(err);
-    }
-  };
+    handleSave,
+    handleDelete,
+  } = useClientProfile(client, navigate);
 
   return (
     <div className="perfil-container">
+
       <header className="perfil-header">
-        <button className="back-btn" onClick={() => navigate(-1)}>
+
+        <button
+          className="back-btn"
+          onClick={() => navigate(-1)}
+        >
           ←
         </button>
+
         <h1>Perfil do Cliente</h1>
+
       </header>
 
       <div className="actions-bar">
+
         <div className="tags">
-          <span className="tag vip">VIP GOLD</span>
-          <span className="tag ativo">ATIVO</span>
+          <span className="tag vip">
+            VIP GOLD
+          </span>
+
+          <span className="tag ativo">
+            ATIVO
+          </span>
         </div>
 
         <div className="actions-buttons">
+
           <button
             onClick={handleDelete}
-            style={{ background: "#ff4d4f", color: "#fff" }}
+            style={{
+              background: "#ff4d4f",
+              color: "#fff",
+            }}
           >
             Excluir Cliente
           </button>
-          <button>Registrar Nota</button>
-          <button className="primary">+ Novo Serviço</button>
+
+          <button>
+            Registrar Nota
+          </button>
+
+          <button className="primary">
+            + Novo Serviço
+          </button>
+
         </div>
+
       </div>
 
       <div className="perfil-grid">
+
         <div className="card perfil-card">
 
-          {/* ✏️ editar */}
-          <div style={{ textAlign: "right", cursor: "pointer" }}>
-            <span onClick={() => setIsEditing(!isEditing)}>✏️</span>
+          {/* EDITAR */}
+          <div
+            style={{
+              textAlign: "right",
+              cursor: "pointer",
+            }}
+          >
+            <span
+              onClick={() =>
+                setIsEditing(!isEditing)
+              }
+            >
+              ✏️
+            </span>
           </div>
 
           <div className="perfil-topo">
+
             <div className="foto"></div>
 
             <div>
+
               {isEditing ? (
-                <input name="nome" value={form.nome} onChange={handleChange} />
+                <input
+                  name="nome"
+                  value={form.nome}
+                  onChange={handleChange}
+                />
               ) : (
                 <h2>{form.nome}</h2>
               )}
-              <span>ID: #{client.id}</span>
+
+              <span>
+                ID: #{client.id}
+              </span>
+
             </div>
+
           </div>
 
           <div className="info-grid">
+
             <div>
+
               <label>TELEFONE</label>
+
               {isEditing ? (
-                <input name="telefone" value={form.telefone} onChange={handleChange} />
+                <input
+                  name="telefone"
+                  value={form.telefone}
+                  onChange={handleChange}
+                />
               ) : (
                 <p>{form.telefone || "-"}</p>
               )}
+
             </div>
 
             <div>
+
               <label>EMAIL</label>
+
               {isEditing ? (
-                <input name="email" value={form.email} onChange={handleChange} />
+                <input
+                  name="email"
+                  value={form.email}
+                  onChange={handleChange}
+                />
               ) : (
                 <p>{form.email || "-"}</p>
               )}
+
             </div>
 
             <div>
+
               <label>CPF</label>
+
               <p>{client.cpf || "-"}</p>
+
             </div>
 
             <div>
+
               <label>OBSERVAÇÕES</label>
+
               {isEditing ? (
-                <textarea name="notas" value={form.notas} onChange={handleChange} />
+                <textarea
+                  name="notas"
+                  value={form.notas}
+                  onChange={handleChange}
+                />
               ) : (
                 <p>{form.notas || "-"}</p>
               )}
+
             </div>
+
           </div>
 
           {isEditing && (
-            <button onClick={handleSave} className="primary">
+            <button
+              onClick={handleSave}
+              className="primary"
+            >
               Salvar
             </button>
           )}
 
           <div className="alerta">
-            <h4>⚠ OBSERVAÇÕES IMPORTANTES</h4>
-            <p>{form.notas || "Nenhuma observação cadastrada."}</p>
+
+            <h4>
+              ⚠ OBSERVAÇÕES IMPORTANTES
+            </h4>
+
+            <p>
+              {form.notas ||
+                "Nenhuma observação cadastrada."}
+            </p>
+
           </div>
+
         </div>
 
+        {/* FINANCEIRO */}
         <div className="card financeiro-card">
+
           <h3>Resumo Financeiro</h3>
 
           <div className="finance-item">
@@ -170,30 +229,50 @@ const ClientProfile = () => {
           <div className="status">
             STATUS: OK
           </div>
+
         </div>
+
       </div>
 
-      {/* 🔥 VOLTOU AQUI */}
+      {/* PARTE INFERIOR */}
       <div className="perfil-grid-bottom">
 
         <div className="card">
+
           <h3>Preferências</h3>
 
-          <p><strong>Serviços favoritos:</strong></p>
+          <p>
+            <strong>
+              Serviços favoritos:
+            </strong>
+          </p>
+
           <div className="chips">
             <span>Limpeza de Pele</span>
             <span>Botox</span>
             <span>Drenagem Linfática</span>
           </div>
 
-          <p><strong>Horários preferidos:</strong></p>
-          <p>Terças e quintas após 17h</p>
+          <p>
+            <strong>
+              Horários preferidos:
+            </strong>
+          </p>
+
+          <p>
+            Terças e quintas após 17h
+          </p>
+
         </div>
 
         <div className="card">
-          <h3>Histórico de Serviços</h3>
+
+          <h3>
+            Histórico de Serviços
+          </h3>
 
           <table>
+
             <thead>
               <tr>
                 <th>Serviço</th>
@@ -203,6 +282,7 @@ const ClientProfile = () => {
             </thead>
 
             <tbody>
+
               <tr>
                 <td>Limpeza de Pele</td>
                 <td>12/05/2024</td>
@@ -220,11 +300,15 @@ const ClientProfile = () => {
                 <td>20/04/2024</td>
                 <td>R$ 1.800,00</td>
               </tr>
+
             </tbody>
+
           </table>
+
         </div>
 
       </div>
+
     </div>
   );
 };
