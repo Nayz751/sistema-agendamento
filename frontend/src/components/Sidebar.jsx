@@ -22,7 +22,7 @@ const Sidebar = () => {
           📄 Clientes
         </button>
 
-        <button className="aura-nav-item" onClick={() => navigate("/appointments")}>
+        <button className="aura-nav-item" onClick={() => navigate("/Appointment")}>
           📅 Agendamento
         </button>
 

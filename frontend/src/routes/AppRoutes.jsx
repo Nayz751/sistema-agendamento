@@ -63,7 +63,7 @@ export default function AppRoutes({
           path="/prontuario"
           element={<Prontuario />}
         />
-
+  
       </Route>
 
     </Routes>

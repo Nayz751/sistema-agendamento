@@ -68,14 +68,23 @@ app.delete("/clientes/:id", async (req, res) => {
 
   try {
     await pool.query(
+      "DELETE FROM agenda WHERE cliente_id = $1",
+      [id]
+    );
+    await pool.query(
       "DELETE FROM clientes WHERE id = $1",
       [id]
     );
+    
+    res.sendStatus(204);
 
-    res.send("Cliente removido");
   } catch (error) {
+
     console.error(error);
-    res.status(500).send("Erro ao deletar cliente");
+
+    res.status(500).json({
+      error: "Erro ao excluir cliente",
+    });
   }
 });
 

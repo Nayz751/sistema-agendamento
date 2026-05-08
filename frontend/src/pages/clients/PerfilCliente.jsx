@@ -1,5 +1,7 @@
 import { useLocation, useNavigate } from "react-router-dom";
 import { useClientProfile } from "../../hooks/useClientProfile";
+import { useState } from "react";
+import DeleteClientDialog from "../../components/ui/DeleteClientDialog";
 import "./PerfilCliente.css";
 
 const ClientProfile = () => {
@@ -7,6 +9,8 @@ const ClientProfile = () => {
   const navigate = useNavigate();
 
   const client = location.state;
+  const [showDeleteModal, setShowDeleteModal] =
+  useState(false);
 
   if (!client) {
     return (
@@ -62,7 +66,7 @@ const ClientProfile = () => {
         <div className="actions-buttons">
 
           <button
-            onClick={handleDelete}
+            onClick={() => setShowDeleteModal(true)}
             style={{
               background: "#ff4d4f",
               color: "#fff",
@@ -78,7 +82,21 @@ const ClientProfile = () => {
           <button className="primary">
             + Novo Serviço
           </button>
+          
+          <DeleteClientDialog
+          open={showDeleteModal}
+          
+          onClose={() =>
+            setShowDeleteModal(false)
+          }
 
+          onConfirm={async () => {
+            await handleDelete();
+            setShowDeleteModal(false);
+          }}
+
+          clientName={form.nome}
+        />
         </div>
 
       </div>

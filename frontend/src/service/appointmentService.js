@@ -49,3 +49,11 @@ export async function confirmAppointment(item) {
     }
   );
 }
+export async function deleteAppointment(id) {
+  return await fetch(
+    `http://localhost:3000/agenda/${id}`,
+    {
+      method: "DELETE",
+    }
+  );
+}

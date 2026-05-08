@@ -9,7 +9,7 @@ export async function createClient(data) {
 }
 
 export async function deleteClient(id) {
-  return fetch(`http://localhost:3000/clientes/${id}`, {
+  return await fetch(`http://localhost:3000/clientes/${id}`, {
     method: "DELETE",
   });
 }

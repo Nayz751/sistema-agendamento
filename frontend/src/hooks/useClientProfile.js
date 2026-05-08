@@ -1,11 +1,16 @@
 import { useState } from "react";
+
 import {
   updateClient,
   deleteClient,
 } from "../service/clientService";
 
-export function useClientProfile(client, navigate) {
-  const [isEditing, setIsEditing] = useState(false);
+export function useClientProfile(
+  client,
+  navigate
+) {
+  const [isEditing, setIsEditing] =
+    useState(false);
 
   const [form, setForm] = useState({
     nome: client?.nome || "",
@@ -17,33 +22,47 @@ export function useClientProfile(client, navigate) {
   function handleChange(e) {
     setForm({
       ...form,
-      [e.target.name]: e.target.value,
+      [e.target.name]:
+        e.target.value,
     });
   }
 
   async function handleSave() {
     try {
-      await updateClient(client.id, form);
+
+      await updateClient(
+        client.id,
+        form
+      );
 
       setIsEditing(false);
+
     } catch (err) {
+
       console.error(err);
     }
   }
 
   async function handleDelete() {
-    const confirmDelete = window.confirm(
-      "Deseja excluir este cliente?"
-    );
 
-    if (!confirmDelete) return;
+    console.log("clicou");
 
     try {
+
       await deleteClient(client.id);
 
+      console.log(
+        "cliente excluído"
+      );
+
       navigate("/");
+
     } catch (err) {
-      console.error(err);
+
+      console.error(
+        "erro ao excluir cliente:",
+        err
+      );
     }
   }
 
