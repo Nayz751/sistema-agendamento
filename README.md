@@ -22,48 +22,33 @@ Ele permite cadastrar clientes, gerenciar agendas e visualizar informações imp
 
 ##  Funcionalidades
 
-###  Gestão de Clientes
+### Gestão de clientes
 - Cadastro de novos clientes
-- Validação de dados (CPF, telefone, email)
+- Validação de dados (CPF, telefone e e-mail)
 - Visualização de perfil completo
-- Histórico e observações do cliente
+- Registro de observações
 
 ### Agendamentos
-- Criar novos agendamentos
-- Selecionar data via calendário
-- Bloqueio de datas passadas
-- Seleção de serviços de forma visual
-- Controle de status:
-  - Pendente
-  - Confirmado
-  - Em andamento
+- Criação de agendamentos
+- Seleção de data
+- Controle de status (pendente, confirmado, em andamento)
+- Busca por cliente ou serviço
 
-###  Dashboard
-- Visão geral do sistema
-- Agendamentos do dia
-- Filtro:
-  - **Ver hoje**
-  - **Ver todos (mês)**
-- Busca de clientes e serviços
-- Cards com métricas:
+### Dashboard
+- Visão geral dos agendamentos
+- Filtro de visualização (dia ou período)
+- Busca dinâmica
+- Indicadores de desempenho:
   - Total de clientes
-  - Agendamentos
+  - Agendamentos do dia
   - Faturamento
-  - Serviço mais procurado
+  - Serviço mais utilizado
 
-### Ações Rápidas
-- Novo agendamento
-- Adicionar cliente
-- Adicionar serviço
-- Acesso ao prontuário
-
-###  Perfil do Cliente
-- Dados completos do cliente
+### Perfil do cliente
+- Dados pessoais
 - Informações de contato
-- Observações importantes
-- Resumo financeiro
-- Histórico de serviços
-
+- Histórico de atendimentos
+- Observações internas
 ---
 
 ##  Problema que o sistema resolve
@@ -110,21 +95,19 @@ O **Aura** resolve isso centralizando tudo em um único sistema simples, rápido
 git clone https://github.com/Nayz751/sistema-agendamento.git
 ```
 
-### 2. Instalar dependências
+### 2. Comandos backend(seleciona a pasta, instala as dependecias e roda o servidor backend)
 ```bash
+cd backend
 npm install
-```
-
-### 3. Rodar frontend
-```bash
-npm start
-```
-
-### 4. Rodar backend
-```bash
 node server.js
 ```
 
+### 3. Comandos frontend(seleciona a pasta, instala as dependecias e roda o servidor frontend)
+```bash
+cd frontend
+npm install
+npm run dev
+```
 ---
 
 ## 💡 Melhorias futuras
