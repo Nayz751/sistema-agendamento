@@ -4,10 +4,14 @@ import { formatPhone } from "../../utils/formatPhone";
 import { formatCPF } from "../../utils/formatCPF";
 import FormField from "../../components/ui/FormField";
 import { useClientForm } from "../../hooks/useClientForm";
+import Toast from "../../components/ui/Toast";
+import { useToast } from "../../hooks/useToast";
 import "./NewClientForm.css";
 
 function NewClientForm() {
   const navigate = useNavigate();
+
+  const { toast, showToast, closeToast } = useToast();
 
   const {
     name,
@@ -28,7 +32,7 @@ function NewClientForm() {
 
     saveClient,
     clear,
-  } = useClientForm(navigate);
+  } = useClientForm(navigate, showToast);
 
   return (
     <div className="aura-container">
@@ -38,7 +42,7 @@ function NewClientForm() {
           <div className="header-title">
             <button
               className="back-arrow"
-              onClick={() => navigate("/")}
+              onClick={() => navigate(-1)}
             >
               ←
             </button>
@@ -47,17 +51,11 @@ function NewClientForm() {
           </div>
 
           <div className="header-actions">
-            <button
-              className="btn-text"
-              onClick={clear}
-            >
+            <button className="btn-text" onClick={clear}>
               Cancelar
             </button>
 
-            <button
-              className="btn-primary"
-              onClick={saveClient}
-            >
+            <button className="btn-primary" onClick={saveClient}>
               Salvar Cliente
             </button>
           </div>
@@ -65,7 +63,6 @@ function NewClientForm() {
 
         <div className="aura-content-grid">
 
-          {/* LADO ESQUERDO */}
           <div>
 
             <div className="aura-card aura-upload-card">
@@ -74,19 +71,12 @@ function NewClientForm() {
               </div>
 
               <h3>Foto do Cliente</h3>
-
-              <p>
-                Identificação opcional
-              </p>
+              <p>Identificação opcional</p>
             </div>
 
             <div className="aura-info-box">
               <h4>💡 Dica</h4>
-
-              <p>
-                Cadastre os clientes corretamente para facilitar os
-                agendamentos futuros.
-              </p>
+              <p>Cadastre os clientes corretamente para facilitar os agendamentos futuros.</p>
             </div>
 
           </div>
@@ -96,95 +86,55 @@ function NewClientForm() {
 
             <div className="aura-card">
 
-              <h2 className="section-header">
-                Dados do Cliente
-              </h2>
+              <h2>Dados do Cliente</h2>
 
-              {/* NOME */}
-              <div className="form-row">
-                <FormField
-                  label="Nome *"
-                  error={nameError}
-                >
-                  <input
-                    type="text"
-                    value={name}
-                    onChange={(e) =>
-                      setName(removeEmoji(e.target.value))
-                    }
-                    placeholder="Nome completo"
-                  />
-                </FormField>
-              </div>
+              <FormField label="Nome *" error={nameError}>
+                <input
+                  value={name}
+                  onChange={(e) => setName(removeEmoji(e.target.value))}
+                />
+              </FormField>
 
-              {/* TELEFONE + EMAIL */}
-              <div className="form-row">
+              <FormField label="Telefone *" error={phoneError}>
+                <input
+                  value={phone}
+                  onChange={(e) => setPhone(formatPhone(e.target.value))}
+                />
+              </FormField>
 
-                <FormField
-                  label="Telefone *"
-                  error={phoneError}
-                >
-                  <input
-                    type="text"
-                    value={phone}
-                    onChange={(e) =>
-                      setPhone(formatPhone(e.target.value))
-                    }
-                    placeholder="(11) 91234-5678"
-                  />
-                </FormField>
+              <FormField label="Email *" error={emailError}>
+                <input
+                  value={email}
+                  onChange={(e) => setEmail(removeEmoji(e.target.value))}
+                />
+              </FormField>
 
-                <FormField
-                  label="Email *"
-                  error={emailError}
-                >
-                  <input
-                    type="email"
-                    value={email}
-                    onChange={(e) =>
-                      setEmail(removeEmoji(e.target.value))
-                    }
-                    placeholder="email@email.com"
-                  />
-                </FormField>
+              <FormField label="CPF">
+                <input
+                  value={cpf}
+                  onChange={(e) => setCpf(formatCPF(e.target.value))}
+                />
+              </FormField>
 
-              </div>
-
-              {/* CPF */}
-              <div className="form-row">
-                <FormField
-                  label="CPF (Opcional)"
-                  error={cpfError}
-                >
-                  <input
-                    type="text"
-                    value={cpf}
-                    onChange={(e) =>
-                      setCpf(formatCPF(e.target.value))
-                    }
-                    placeholder="000.000.000-00"
-                  />
-                </FormField>
-              </div>
-
-              {/* OBSERVAÇÕES */}
-              <div className="form-row">
-                <FormField label="Observações">
-                  <textarea
-                    value={notes}
-                    onChange={(e) =>
-                      setNotes(removeEmoji(e.target.value))
-                    }
-                    placeholder="Observações importantes..."
-                  />
-                </FormField>
-              </div>
+              <FormField label="Observações">
+                <textarea
+                  value={notes}
+                  onChange={(e) => setNotes(removeEmoji(e.target.value))}
+                />
+              </FormField>
 
             </div>
 
           </div>
 
         </div>
+
+        <Toast
+          open={toast.open}
+          message={toast.message}
+          type={toast.type}
+          onClose={closeToast}
+        />
 
       </main>
     </div>

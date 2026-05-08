@@ -3,14 +3,14 @@ import Calendar from "react-calendar";
 import "react-calendar/dist/Calendar.css";
 import "./appointment.css";
 
-import ClientAutocomplete from "../components/ui/ClientAutocomplete";
-import TimeInput from "../components/ui/TimeInput";
-import TextAreaField from "../components/ui/TextAreaField";
-import ServiceSelector from "../components/Appointment/ServiceSelector";
-import NextAppointmentCard from "../components/Appointment/NextAppointmentCard";
-import AppointmentHeader from "../components/Appointment/AppointmentHeader";
-import AppointmentSidebar from "../components/Appointment/AppointmentSidebar";
-import { useAppointmentForm } from "../hooks/useAppointmentForm";
+import ClientAutocomplete from "../../components/ui/ClientAutocomplete";
+import TimeInput from "../../components/ui/TimeInput";
+import TextAreaField from "../../components/ui/TextAreaField";
+import ServiceSelector from "../../components/Appointment/ServiceSelector";
+import NextAppointmentCard from "../../components/Appointment/NextAppointmentCard";
+import AppointmentHeader from "../../components/Appointment/AppointmentHeader";
+import AppointmentSidebar from "../../components/Appointment/AppointmentSidebar";
+import { useAppointmentForm } from "../../hooks/useAppointmentForm";
 
 function Appointment() {
   const navigate = useNavigate();

@@ -6,7 +6,13 @@ export async function createClient(data) {
     },
     body: JSON.stringify(data),
   });
-}
+  const json = await res.json();
+
+  return {
+    ok: res.ok,
+    data: json,
+  };
+} 
 
 export async function deleteClient(id) {
   return await fetch(`http://localhost:3000/clientes/${id}`, {
@@ -22,4 +28,10 @@ export async function updateClient(id, data) {
     },
     body: JSON.stringify(data),
   });
+  const json = await res.json();
+
+  return {
+    ok: res.ok,
+    data: json,
+  };
 }

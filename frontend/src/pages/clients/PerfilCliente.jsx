@@ -2,6 +2,8 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { useClientProfile } from "../../hooks/useClientProfile";
 import { useState } from "react";
 import DeleteClientDialog from "../../components/ui/DeleteClientDialog";
+import DriveFileRenameOutlineIcon from "@mui/icons-material/DriveFileRenameOutline";
+import Avatar from "@mui/material/Avatar";
 import "./PerfilCliente.css";
 
 const ClientProfile = () => {
@@ -34,6 +36,16 @@ const ClientProfile = () => {
     handleSave,
     handleDelete,
   } = useClientProfile(client, navigate);
+
+  const getInitials = (name = "") => {
+  const parts = name.trim().split(" ");
+
+  if (parts.length === 1) {
+    return parts[0][0]?.toUpperCase() || "";
+  }
+
+  return (parts[0][0] + parts[parts.length - 1][0]).toUpperCase();
+    };
 
   return (
     <div className="perfil-container">
@@ -78,11 +90,7 @@ const ClientProfile = () => {
           <button>
             Registrar Nota
           </button>
-
-          <button className="primary">
-            + Novo Serviço
-          </button>
-          
+                    
           <DeleteClientDialog
           open={showDeleteModal}
           
@@ -105,25 +113,22 @@ const ClientProfile = () => {
 
         <div className="card perfil-card">
 
-          {/* EDITAR */}
-          <div
-            style={{
-              textAlign: "right",
-              cursor: "pointer",
-            }}
-          >
-            <span
-              onClick={() =>
-                setIsEditing(!isEditing)
-              }
-            >
-              ✏️
-            </span>
-          </div>
+        <div
+          style={{
+            textAlign: "right",
+            cursor: "pointer",
+          }}
+        >
+          <span onClick={() => setIsEditing(!isEditing)}>
+            <DriveFileRenameOutlineIcon />
+          </span>
+        </div>
 
           <div className="perfil-topo">
 
-            <div className="foto"></div>
+            <Avatar className="avatar-cliente">
+            {getInitials(form.nome)}
+            </Avatar>
 
             <div>
 
@@ -206,12 +211,14 @@ const ClientProfile = () => {
           </div>
 
           {isEditing && (
+            <div className="actions-buttons">
             <button
               onClick={handleSave}
               className="primary"
             >
               Salvar
             </button>
+            </div>
           )}
 
           <div className="alerta">

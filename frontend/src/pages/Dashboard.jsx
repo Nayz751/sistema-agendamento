@@ -1,12 +1,12 @@
 import React, { useState, useRef, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import QuickActions from "../components/dashboard/QuickActions";
+import AppointmentTable from "../components/dashboard/AppointmentTable";
+import StatCard from "../components/dashboard/StatCard";
+import { ROUTES } from "../routes/navigation";
 import "./Dashboard.css";
 
-const Dashboard = ({
-  openClientProfile,
-  clients,
-}) => {
-
+const Dashboard = ({ clients }) => {
   const navigate = useNavigate();
 
   const [search, setSearch] = useState("");
@@ -88,6 +88,7 @@ const Dashboard = ({
   return (
     <div className="dashboard-container">
 
+      {/* HEADER */}
       <header className="dashboard-header-white">
         <div className="header-content">
 
@@ -97,7 +98,7 @@ const Dashboard = ({
           </div>
 
           <div className="header-search-area">
-            <div style={{ position: "relative" }} ref={searchRef}>
+            <div ref={searchRef} style={{ position: "relative" }}>
               <input
                 type="text"
                 placeholder="Buscar cliente ou serviço..."
@@ -137,44 +138,21 @@ const Dashboard = ({
         </div>
       </header>
 
+      {/* MAIN */}
       <main className="dashboard-main">
 
+        {/* STATS */}
         <div className="stats-grid">
 
-          <div className="stat-card">
-            <span className="stat-label">Hoje</span>
-            <span className="stat-value">
-              {appointments.filter((a) => a.date === today).length}
-            </span>
-            <p>Agendamentos</p>
-          </div>
-
-          <div className="stat-card">
-            <span className="stat-label">Clientes</span>
-            <span className="stat-value">{clients?.length || 0}</span>
-            <p>Ativos</p>
-          </div>
-
-          <div className="stat-card">
-            <span className="stat-label">Faturamento</span>
-            <span className="stat-value">R$ 2.450</span>
-            <p>Total</p>
-          </div>
-
-          <div className="stat-card">
-            <span className="stat-label">Semana</span>
-            <span className="stat-value">{weekTotal}</span>
-            <p>Previsão</p>
-          </div>
-
-          <div className="stat-card">
-            <span className="stat-label">Serviço em Alta</span>
-            <span className="stat-value">{topService}</span>
-            <small>{topPercentage}% de demanda</small>
-          </div>
+          <StatCard label="Hoje" value={appointments.filter(a => a.date === today).length} sub="Agendamentos" />
+          <StatCard label="Clientes" value={clients?.length || 0} sub="Ativos" />
+          <StatCard label="Faturamento" value="R$ 2.450" sub="Total" />
+          <StatCard label="Semana" value={weekTotal} sub="Previsão" />
+          <StatCard label="Serviço em Alta" value={topService} sub={`${topPercentage}% de demanda`} />
 
         </div>
 
+        {/* GRID */}
         <div className="dashboard-grid">
 
           <section className="appointments-section">
@@ -190,143 +168,31 @@ const Dashboard = ({
               </button>
             </div>
 
-            <div className="table-container">
-              <table className="aura-table">
-                <thead>
-                  <tr>
-                    <th>Data & Hora</th>
-                    <th>Cliente</th>
-                    <th>Serviço</th>
-                    <th>Status</th>
-                    <th>Ações</th>
-                  </tr>
-                </thead>
-
-                <tbody>
-                  {filteredList.map((app) => (
-                    <tr key={app.id}>
-
-                      <td>
-                        <strong>{app.time}</strong>
-                        <span>
-                          {app.date.split("-").reverse().slice(0, 2).join("/")}
-                        </span>
-                      </td>
-
-                      <td>
-                        <div className="table-client">
-                          <div className="client-avatar">
-                            {getInitials(app.client)}
-                          </div>
-
-                          <span
-                            style={{ cursor: "pointer", textDecoration: "underline" }}
-                            onClick={() => {
-                              const fullClient = clients.find(
-                                (c) => c.nome === app.client
-                              );
-
-                              if (fullClient) {
-                                navigate("/profile", { state: fullClient });
-                              }
-                            }}
-                          >
-                            {app.client}
-                          </span>
-                        </div>
-                      </td>
-
-                      <td>{app.service}</td>
-                      <td>{app.status}</td>
-
-                      <td style={{ position: "relative" }}>
-                        <button
-                          className="btn-options"
-                          onClick={(e) => {
-                            e.stopPropagation();
-                            setOpenMenuId(openMenuId === app.id ? null : app.id);
-                          }}
-                        >
-                          •••
-                        </button>
-
-                        {openMenuId === app.id && (
-                          <div ref={menuRef} className="popup-menu">
-                            <ul>
-                              <li onClick={() => navigate("/profile", { state: app })}>
-                                Perfil
-                              </li>
-                              <li>Ficha médica</li>
-                              <li>Histórico</li>
-                            </ul>
-                          </div>
-                        )}
-                      </td>
-
-                    </tr>
-                  ))}
-                </tbody>
-
-              </table>
-            </div>
+            {/* TABLE COMPONENT */}
+            <AppointmentTable
+              filteredList={filteredList}
+              clients={clients}
+              navigate={navigate}
+              ROUTES={ROUTES}
+              getInitials={getInitials}
+              openMenuId={openMenuId}
+              setOpenMenuId={setOpenMenuId}
+              menuRef={menuRef}
+            />
 
           </section>
 
+          {/* SIDEBAR */}
           <aside className="sidebar-right">
 
-            <div className="shortcut-box">
-              <h3>Ações Rápidas</h3>
-
-              <div className="shortcut-grid">
-
-                <button
-                  className="shortcut-item"
-                  onClick={() => navigate("/appointments")}
-                >
-                  Novo agendamento
-                </button>
-
-                <button
-                  className="shortcut-item"
-                  onClick={() => navigate("/clients")}
-                >
-                  Adicionar cliente
-                </button>
-
-                <button
-                  className="shortcut-item"
-                  onClick={() => navigate("/services")}
-                >
-                  Adicionar serviço
-                </button>
-
-                <button
-                  className="shortcut-item"
-                  onClick={() => navigate("/prontuario")}
-                >
-                  Prontuário
-                </button>
-
-              </div>
-            </div>
+            <QuickActions />
 
             <div className="finance-box">
               <h3>Resumo Financeiro</h3>
 
-              <div>
-                <span>Hoje</span>
-                <strong>R$ 1.850,00</strong>
-              </div>
-
-              <div>
-                <span>Semana</span>
-                <strong>R$ 8.420,00</strong>
-              </div>
-
-              <div>
-                <span>Total Mensal</span>
-                <strong>R$ 24.312,00</strong>
-              </div>
+              <div><span>Hoje</span><strong>R$ 1.850,00</strong></div>
+              <div><span>Semana</span><strong>R$ 8.420,00</strong></div>
+              <div><span>Total Mensal</span><strong>R$ 24.312,00</strong></div>
 
             </div>
 
@@ -335,7 +201,6 @@ const Dashboard = ({
         </div>
 
       </main>
-
     </div>
   );
 };

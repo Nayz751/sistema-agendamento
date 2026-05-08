@@ -4,9 +4,9 @@ import Layout from "../layouts/Layout";
 import Dashboard from "../pages/Dashboard";
 import HomeClients from "../pages/clients/HomeClients";
 import NewClientForm from "../pages/clients/NewClientForm";
-import Appointment from "../pages/Appointment";
+import Appointment from "../pages/Agenda/Appointment";
 import ClientProfile from "../pages/clients/PerfilCliente";
-import Prontuario from "../pages/Prontuario";
+import Prontuario from "../pages/clients/Prontuario";
 
 export default function AppRoutes({
   clients,
@@ -48,7 +48,7 @@ export default function AppRoutes({
 
         {/* 📅 AGENDAMENTOS */}
         <Route
-          path="/appointments"
+          path="/appointment"
           element={<Appointment />}
         />
 
@@ -63,6 +63,9 @@ export default function AppRoutes({
           path="/prontuario"
           element={<Prontuario />}
         />
+
+        <Route path="/agenda/:id" 
+        element={<Appointment />} />
   
       </Route>
 

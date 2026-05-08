@@ -21,11 +21,15 @@
 }
 
 .back-btn {
-  border: none;
-  background: white;
-  border-radius: 10px;
-  padding: 8px 12px;
-  cursor: pointer;
+    width: 42px;
+    height: 42px;
+    border: none;
+    border-radius: 50%;
+    background: var(--aura-accent-soft);
+    color: #7a5c5c;
+    font-size: 24px;
+    font-weight: bold;
+    cursor: pointer;
 }
 
 .actions-bar {
@@ -55,17 +59,28 @@
 }
 
 .actions-buttons button {
-  margin-left: 10px;
-  padding: 10px 15px;
-  border-radius: 20px;
-  border: 1px solid var(--rosa);
-  background: white;
-  cursor: pointer;
+    padding: 12px;
+    border-radius: 20px;
+    border: none;
+    font-weight: 50;
+    cursor: pointer;
+    background: #ffe4ec;
+    color: #ff4d88;
+    transition: all 0.2s ease;
 }
 
 .actions-buttons .primary {
   background: var(--rosa);
   border: none;
+}
+
+.avatar-cliente {
+  background-color: #ff4fa3;
+  width: 90px;
+  height: 90px;
+  font-weight: bold;
+  font-size: 20px;
+  color: #c80370;
 }
 
 .perfil-grid {

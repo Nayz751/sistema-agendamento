@@ -2,6 +2,9 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { deleteClient } from "../../service/clientService";
 import { sortClients } from "../../utils/sortClients";
+import PersonIcon from '@mui/icons-material/Person';
+import DeleteIcon from '@mui/icons-material/Delete';
+import EditCalendarIcon from '@mui/icons-material/EditCalendar';
 import "./HomeClients.css";
 
 const HomeClients = ({ clients, loadClients }) => {
@@ -118,17 +121,17 @@ const HomeClients = ({ clients, loadClients }) => {
                           });
                         }}
                       >
-                        👁
+                      <PersonIcon />
                       </button>
 
                       <button
                         onClick={(e) => {
                           e.stopPropagation();
 
-                          navigate(`/clients/edit/${c.id}`);
+                          navigate(`/agenda/${c.id}`);
                         }}
                       >
-                        ✏️
+                      <EditCalendarIcon/>
                       </button>
 
                       <button
@@ -138,7 +141,7 @@ const HomeClients = ({ clients, loadClients }) => {
                           handleDelete(c.id);
                         }}
                       >
-                        🗑
+                      <DeleteIcon/>
                       </button>
 
                     </div>
@@ -209,7 +212,7 @@ const HomeClients = ({ clients, loadClients }) => {
 
                 <button
                   onClick={() =>
-                    navigate("/appointments", {
+                    navigate("/appointment", {
                       state: {
                         client: selected,
                       },
@@ -217,6 +220,16 @@ const HomeClients = ({ clients, loadClients }) => {
                   }
                 >
                   Agendar
+                </button>
+                
+                <button
+                  onClick={() =>
+                    navigate("/prontuario", {
+                      state: selected,
+                    })
+                  }
+                >
+                  Ver Prontuários
                 </button>
 
               </div>
